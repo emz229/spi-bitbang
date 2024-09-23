@@ -1,0 +1,40 @@
+/ {
+	chosen {
+		zephyr,console = &usart2;
+		zephyr,shell-uart = &usart2;
+	};
+
+	spibb0: spibb0 {
+		compatible = "zephyr,spi-bitbang";
+		status="okay";
+		#address-cells = <1>;
+		#size-cells = <0>;
+		clk-gpios = <&gpioa 0x04 GPIO_ACTIVE_HIGH>;
+		mosi-gpios = <&gpioa 0x05 GPIO_ACTIVE_HIGH>;
+		miso-gpios = <&gpioa 0x06 0>;
+		cs-gpios = <&gpioa 0x07 GPIO_ACTIVE_LOW>;
+	};
+};
+
+&spibb0 {
+        w25q128jv: w25q128jv@0 {
+			compatible = "jedec,spi-nor";
+                        size = <0x8000000>;
+                        reg = <0>;
+                        spi-max-frequency = <20000000>;
+                        status = "okay";
+                        jedec-id = [ef 40 18];
+        };
+};
+
+&spi1 {
+	status = "disabled";
+};
+
+&spi2 {
+	status = "disabled";
+};
+
+&i2c1 {
+	status = "disabled";
+};
